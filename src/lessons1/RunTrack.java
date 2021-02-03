@@ -4,13 +4,13 @@ import java.util.Random;
 
 public class RunTrack {
 
-    private static int distance;
+    private int distance;
 
     public RunTrack(int distance) {
         this.distance = (int) (Math.random() *100);
     }
 
-    public static int getDistance() {
+    public int getDistance() {
 
         return (int) (Math.random() *100);
     }

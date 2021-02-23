@@ -37,22 +37,21 @@ public class Robot {
         this.maxRun = maxRun;
     }
 
-    public boolean run(){
-
-        if (RunTrack.getDistance()<getMaxRun()){
-            System.out.println(name+" Смог пробежать дорожку длинной "+Wall.getHeight());
+    public boolean run(int maxRunDistance) {
+        if (maxRunDistance < maxRun) {
+            System.out.println(name + " Смог пробежать дорожку длинной " + maxRunDistance);
             return true;
         }
-        System.out.println(name+" Не смог пробежать дорожку длинной "+Wall.getHeight());
+        System.out.println(name + " Не смог пробежать дорожку длинной " + maxRunDistance);
         return false;
     }
 
-    public boolean jump(){
-        if (Wall.getHeight()<getMaxJump()){
-            System.out.println(name+" Смог перепрыгнуть стену высотой "+Wall.getHeight());
+    public boolean jump(int maxJumpDistance) {
+        if (maxJumpDistance < maxJump) {
+            System.out.println(name + " Смог перепрыгнуть стену высотой " + maxJumpDistance);
             return true;
         }
-        System.out.println(name+" Не смог перепрыгнуть стену высотой "+Wall.getHeight());
+        System.out.println(name + " Не смог перепрыгнуть стену высотой " + maxJumpDistance);
         return false;
     }
 }

@@ -14,11 +14,12 @@ public class App2 extends Application {
             primaryStage.setTitle("Chat_v0.2");
             primaryStage.setScene(new Scene(root));
             primaryStage.show();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public static void main(String[] args) throws Exception  {
+
+    public static void main(String[] args) throws Exception {
         launch(args);
     }
 }

@@ -7,15 +7,12 @@ import java.net.Socket;
 
 public class ClientHandler {
 
-    private MyServer myServer;
-    private Socket socket;
-    private DataInputStream in;
-    private DataOutputStream out;
+    private final MyServer myServer;
+    private final Socket socket;
+    private final DataInputStream in;
+    private final DataOutputStream out;
     private String name;
-
-    public String getName() {
-        return name;
-    }
+    private boolean isAuthorized;
 
     public ClientHandler(MyServer myServer, Socket socket) {
         try {
@@ -33,8 +30,46 @@ public class ClientHandler {
                 }
             }).start();
 
+            new Thread(() -> {
+
+                try {
+
+                    Thread.sleep(120000);
+
+                } catch (InterruptedException e) {
+
+                    e.printStackTrace();
+
+                }
+
+                if (!isAuthorized) {
+
+                    System.out.println("время на авторизацию вышло");
+
+                    closeConnection();
+
+                }
+
+            }
+
+            ).start();
+
         } catch (IOException e) {
             throw new RuntimeException("Проблемы при создании обработчика клиента");
+        }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    private void closeConnection() {
+        try {
+            in.close();
+            out.close();
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -48,6 +83,7 @@ public class ClientHandler {
                 if (nick != null) {
                     if (!myServer.isNickBusy(nick)) {
                         sendMsg("/authok " + nick);
+                        isAuthorized = true;
                         name = nick;
                         myServer.broadcastMsg(name + " зашел в чат");
                         myServer.subscribe(this);
@@ -62,7 +98,7 @@ public class ClientHandler {
                 sendMsg("Your command will be need start with /auth");
             }
         }
-        }
+    }
 
     public void readMessages() throws IOException {
         while (true) {
@@ -85,6 +121,7 @@ public class ClientHandler {
             }
         }
     }
+
     public void sendMsg(String msg) {
         try {
             out.writeUTF(msg);

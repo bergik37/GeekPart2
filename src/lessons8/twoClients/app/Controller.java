@@ -13,20 +13,17 @@ import java.util.ResourceBundle;
 
 public class Controller extends View implements Initializable {
 
+    EchoServer echoServer = new EchoServer();
     @FXML
     private TextArea output_text;
     @FXML
     private TextField write_text;
     @FXML
     private Button send_Button;
-
+    private final Model model = new Model();
 
     public void initialize(URL location, ResourceBundle resources) {
     }
-
-    private Model model = new Model();
-
-    EchoServer echoServer = new EchoServer();
 
     private void go() {
 
